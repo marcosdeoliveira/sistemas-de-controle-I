@@ -5,7 +5,7 @@ clc; %limpa o terminal
 pkg load control;
 s = tf('s');
 
-t = 0:0.05:10; %tempo em analise
+t = 0:0.01:10; %tempo em analise
 
 %dados do enunciado:
 P = ( 400/(s^2 + 30*s + 200) ) %modelo da planta
@@ -16,10 +16,18 @@ R = 1/s^2
 %que garante o erro estacionario com valor desejado
 K = 230*Eest/400 
 
-G = P*K
+G = K*P
 
-T = G/(1+G) %funcao de transferencia no ramo direto
+H=1;
 
-Y = ramp(T,t);
+T = G/(1+G*H) %funcao de transferencia no ramo direto
 
-plot(t, Y, "-b", t,t,"--r")
+E = R/(1+G)
+
+
+Y = ramp(T,t); %
+Y2 = ramp(E,t); %erro
+
+figure,plot(t, Y, "-b")
+%figure,plot(t, Y2, "-r")
+
