@@ -2,6 +2,9 @@
 
 *resolução dos larboratórios de sistema de controle 1*
 
+**Lab 00**
+>Introdução ao Octave
+
 **Lab 01**
 >[description]
 
