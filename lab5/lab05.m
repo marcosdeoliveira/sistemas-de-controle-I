@@ -35,6 +35,8 @@ title_h = title('Resposta a rampa unitária', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 
+print -djpg respostaSistema.jpg
+
 ## Comportamento do valor de erro
 figure,plot(t,E,"-b",[min(t), max(t)],[Eest Eest], '--r','linewidth',1);
 
@@ -42,3 +44,5 @@ legend("erro estácion\ário");
 title_h = title('Resposta a rampa unitária', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
+
+print -djpg erroEstacionario.jpg
