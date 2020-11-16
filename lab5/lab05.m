@@ -14,7 +14,7 @@ R = 1/s^2
 
 %encontrouse um controlador proporcional
 %que garante o erro estacionario com valor desejado
-K = 230*Eest/400 
+K = 5/s
 
 G = K*P
 
@@ -22,12 +22,13 @@ H=1;
 
 T = G/(1+G*H) %funcao de transferencia no ramo direto
 
-E = R/(1+G)
+%E = R/(1+G)
 
 
-Y = ramp(T,t); %
-Y2 = ramp(E,t); %erro
+Y = step(T/s,t); %
 
-figure,plot(t, Y, "-b")
-%figure,plot(t, Y2, "-r")
+Y2 = step(1/s,t); %erro
 
+E = Y2-Y
+figure,plot(t, Y, "-b", t, Y2, "-r")
+plot(t,E,"--g")
