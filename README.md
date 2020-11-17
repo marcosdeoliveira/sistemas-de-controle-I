@@ -6,7 +6,7 @@
 >Introdução ao Octave
 
 **Lab 01**
->manipulação de funções e gráficos
+>Manipulação de funções e gráficos
 
 
 **Lab 02**
