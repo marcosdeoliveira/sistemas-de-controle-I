@@ -6,7 +6,10 @@ clear all;
 pkg load control;
 s = tf('s');
 ## para a simulação
-t = 0:0.1:50;
+t = 0:0.1:100;
+%% imprimir graficos
+global print_on = false;
+
 
 P = 1.06 / (s*(s+1)*(s+2));
 H = 1;
@@ -38,14 +41,17 @@ figure, rlocus(Ks*P*H);
 title("rlocus of Ks(s)*P(s)*H(s)");
 
 ## resposta em malha fechada com o controlador
-G = Ks*P;
-T = G/(1+(G*H));
-y_cc = step(T/s,t);
+##G = Ks*P;
+##T = G/(1+(G*H));
+T_cc = feedback((Ks*P),H);
+y_cc = step(T_cc/s,t);
+
 ## resposta em malha fechada sem o controlador
-Ks=1;
-G = Ks*P;
-T = G/(1+(G*H));
-y_sc = step(T/s,t);
+K=1;
+##G = Ks*P;
+##T = G/(1+(G*H));
+T_sc = feedback((K*P),H);
+y_sc = step(T_sc/s,t);
 
 ## sinal de entrada
 y_ref = step(1/s,t);
@@ -55,5 +61,33 @@ legend("referencia", "com controlador", "sem controlador");
 title("resposta a rampa unitária");
 xlabel("Tempo(s)");
 ylabel("Amplitude");
-##erro_estacionario = y_ref - y_sc;
-##figure, plot(t,erro_estacionario)
+
+## erro estacionário
+erro_sc = y_ref - y_sc;
+erro_cc = y_ref - y_cc;
+figure, plot(t,erro_sc,"-r", t, erro_cc, "b");
+legend("sem controlador", "com controlador");
+title("Erro estacionário do sistema para rampa");
+xlabel("Tempo(s)");
+ylabel("Amplitude");
+
+## resposta ao degrau
+y_cc = step(T_cc,t);
+y_sc = step(T_sc,t);
+figure, plot(t,y_sc,"-r", t, y_cc, "b");
+legend("sem controlador", "com controlador");
+title("Resposta ao degrau");
+xlabel("Tempo(s)");
+ylabel("Amplitude");
+
+%% sinal de saída do do controlador
+%% T_ctrl relaciona o sinal saída do controlador [U(s)]
+%% com o sinal entrada do sistema [R(s)]
+T_ctrl = Ks / (1 + Ks*P*H);
+Y_sig = step(T_ctrl,t);
+figure, plot(t,Y_sig,"b");
+legend("sinal de controle");
+title("Resposta ao degrau");
+xlabel("Tempo(s)");
+ylabel("Amplitude");
+
