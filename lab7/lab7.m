@@ -47,9 +47,12 @@ function trasFunction = atualizaControlador(kp, ti, td, energy=0)
   
   if(energy==1)
   %% sinal de saída do do controlador
-  ## T_ctrl_input = K_pid / (1+K_pid*P*H);
-  T_ctrl_input = feedback(K_pid*P,H);
-  Y_sig = step(T_ctrl_input,t);
+  %% T_ctrl_input relaciona o sinal saída do controlador [U(s)]
+  %% com o sinal entrada do sistema [R(s)]
+  
+  T_ctrl_input = K_pid / (1+K_pid*P*H);
+  
+  Y_sig = step(T_ctrl_input,t); % <- acontece algum erro aqui!!!
 
   %% grafico com a energia demandada do controlador no tempo
   figure,plot(t, Y_sig,[min(t), max(t)],[1 1], '--r','linewidth',1);
@@ -87,7 +90,7 @@ T4 = atualizaControlador(1, 1, 4);
 y4 = step(T4,t);
 
 %% ajuste final
-T5 = atualizaControlador(0.9, 1, 4,energy=1);
+T5 = atualizaControlador(0.9, 1, 4);
 y5 = step(T5,t);
 
 %% sinal de referencia [degrau unitário]
@@ -102,6 +105,7 @@ title_h = title('Ajuste de parametros', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 hold off;
+
 if(print_on)
   print -djpg testeParametros.jpg
 endif
@@ -115,6 +119,7 @@ title_h = title('PID calibrado', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 hold off;
+
 if(print_on)
   print -djpg controladorFinal.jpg
 endif
@@ -129,6 +134,7 @@ title_h = title('Erro estacionario', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 hold off;
+
 if(print_on)
   print -djpg erroEstacionario.jpg
 endif
