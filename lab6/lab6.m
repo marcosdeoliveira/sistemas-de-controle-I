@@ -4,7 +4,10 @@ close all;
 clear all;
 
 pkg load control;
-s = tf('s')
+s = tf('s');
+
+%% imprimir graficos
+global print_on = false;
 
 ## para a simulação
 t_max = 6;
@@ -69,9 +72,13 @@ title_h = title('Resposta ao degrau', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 
-print -djpg stepResponse.jpg
+if(print_on)
+  print -djpg stepResponse.jpg
+endif;
 
 ## sinal de saída do do controlador
+## T_ctrl_input relaciona o sinal saída do controlador [U(s)]
+## com o sinal entrada do sistema [R(s)]
 T_ctrl_input = Ks / (1+Ks*P*H);
 Y_sig = step(T_ctrl_input,t);
 
@@ -83,4 +90,6 @@ title_h = title('Resposta ao degrau', 'fontsize', 15);
 xlabel('Tempo(s)', 'fontsize', 15);
 ylabel('Amplitude', 'fontsize', 15);
 
-print -djpg ctrlSignal.jpg
+if(print_on)
+  print -djpg ctrlSignal.jpg
+endif;
