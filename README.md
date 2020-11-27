@@ -31,3 +31,6 @@
 
 **Lab 07**
 >Projeto de controlador PID usando o método Ziegles-Nichols
+
+**Projeto Final**
+>Controle em malha fechada de velocidade de cruzeiro, vulgo piloto automático
