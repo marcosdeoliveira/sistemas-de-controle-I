@@ -29,7 +29,7 @@ polo_desejado_02 = -f_amort*freq_nat - freq_nat*sqrt(1-f_amort^2)*j;
 ## O primeiro passo é determinar o angulo que falta para os polos desejados
 ## fazerem parde do lugar das raízes
 
-## substituindo o polo_desejado_01 na malha fechada [P(s)*H(s)]
+## resposta do sistema em malha aberta para os polos desejados [P(s)*H(s)]
 malha_fechada = (4/(polo_desejado_01*(polo_desejado_01+2)))*H;
 
 ## encontrando algulo que deve ser corrigido
